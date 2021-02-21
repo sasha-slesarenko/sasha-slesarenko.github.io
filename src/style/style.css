@@ -110,12 +110,14 @@
     width: 100%;
     height: 3rem;
     text-align: center;
+    padding-left: 50px;
   }
 
   .matrix{
     border-collapse: collapse;
     margin-top: 20px;
     width: 100%;
+    color: #aea8a3;
   }
 
   .matrix_td{
@@ -129,6 +131,12 @@
     background: #aea8a3;
     width: 25%;
     height: 10vh;
+    color:white;
+  }
+
+  .matrix_value{
+    color: black;
+    font-size: xx-large;
   }
 
   input[type="submit"] {
@@ -142,12 +150,12 @@
     transition: 0.3s;
   }
   
-  input[type="submit"]:focus {
-    border-color: dodgerBlue;
-    box-shadow: 0 0 8px 0 dodgerBlue;
+  .copy_btn:focus {
+    border-color: #839DAD;
+    box-shadow: 0 0 8px 0 #839DAD;
   }
   
-  .inputWithIcon input[type="submit"] {
+  .inputWithIcon .copy_btn {
     padding-left: 40px;
   }
   
@@ -164,8 +172,8 @@
     transition: 0.3s;
   }
   
-  .inputWithIcon input[type="submit"]:focus + i {
-    color: dodgerBlue;
+  .inputWithIcon .copy_btn:focus + i {
+    color: #839DAD;
   }
   
   .inputWithIcon.inputIconBg i {
@@ -175,9 +183,9 @@
     border-radius: 4px 0 0 4px;
   }
   
-  .inputWithIcon.inputIconBg input[type="submit"]:focus + i {
+  .inputWithIcon.inputIconBg .copy_btn:focus + i {
     color: #fff;
-    background-color: dodgerBlue;
+    background-color: #839DAD;
   }
 }
 @media screen and (max-width: 768px) {

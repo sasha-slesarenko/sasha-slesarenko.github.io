@@ -1,189 +1,201 @@
 
-  var matrix = new Matrix();
+$(function () {
+	$(".calculate_btn").click(function () {
+		var date = new Date($("#input_date").val());
 
-  $(function () {
-     $("#calculate_btn").click(function () {
-      calculate();
-    });
-    $('.copy_btn').click(function() {
-      copyToClipboard( $(".matrix_result").text() );
-    });
-  });
-  
-  function calculate() {
-    var date =  new Date($("#input_date").val());	
-    matrix.init(date);
-  
-    $(".character").html(matrix.array[0]);
-    $(".energy").html(matrix.array[1]);
-    $(".interest").html(matrix.array[2]);
-    $(".health").html(matrix.array[3]);
-    $(".logic").html(matrix.array[4]);
-    $(".work").html(matrix.array[5]);
-    $(".luck").html(matrix.array[6]);
-    $(".debt").html(matrix.array[7]);
-    $(".memory").html(matrix.array[8]);
-  
-    $(".fate").text(matrix.fate);
-    $(".temper").text(matrix.temper);
-    $(".target").text(matrix.target);
-    $(".family").text(matrix.family);
-    $(".habbits").text(matrix.habbits);
-    $(".mode_of_life").text(matrix.mode_of_life);
-  
-    $(".matrix_result").text(matrix.getString());
-  }
+		if (!isValidDate(date))
+			return;
 
-  function copyToClipboard(str) {
-    var area = document.createElement('textarea');
-  
-    document.body.appendChild(area);
-      area.value = str;
-      area.select();
-      document.execCommand("copy");
-    document.body.removeChild(area);
-  }
+		calculate(date);
+	});
+
+	$('.copy_btn').click(function () {
+		copyToClipboard($(".matrix_result").text());
+	});
+});
+
+function calculate(date) {
+	
+	var matrix = new PercovaMatrix();
+
+	matrix.calculateMatrix(date);
+
+	$(".character").html(matrix.character);
+	$(".energy").html(matrix.energy);
+	$(".interest").html(matrix.interest);
+	$(".health").html(matrix.health);
+	$(".logic").html(matrix.logic);
+	$(".work").html(matrix.work);
+	$(".luck").html(matrix.luck);
+	$(".debt").html(matrix.debt);
+	$(".memory").html(matrix.memory);
+
+	$(".fate").text(matrix.fate);
+	$(".temper").text(matrix.temper);
+	$(".target").text(matrix.target);
+	$(".family").text(matrix.family);
+	$(".habbits").text(matrix.habbits);
+	$(".mode_of_life").text(matrix.mode_of_life);
+
+	$(".matrix_result").text(matrix.getResult());
+}
+
+function isValidDate(d) {
+	return d instanceof Date && !isNaN(d);
+}
+
+function copyToClipboard(str) {
+	var area = document.createElement('textarea');
+
+	document.body.appendChild(area);
+	area.value = str;
+	area.select();
+	document.execCommand("copy");
+	document.body.removeChild(area);
+}
 
 
-function Matrix() {
-	
-	this.day = 0;
-	this.month = 0;
-	this.year = 0;
-	
-	this.normalizedDay = 0;
-	this.normalizedMonth = 0;
-	this.normalizedYear = 0;
-	
-	this.num1 = 0;
-	this.num2 = 0;
-	this.num3 = 0;
-	this.num4 = 0;
-	
-	this.fate = '';
-	this.temper = '';
-	this.target = '';
-	this.family = '';
-	this.habbits = '';
-	this.mode_of_life = '';
-	
-	this.array = [];
-	this.empty = 'Пусто';
-	
-	this.init = function(date) {
-		this.day = date.getDate();
-		this.month = date.getMonth()+1;
-		this.year = date.getFullYear();
-		
-		this.normalizedDay = this.normalize(this.day);
-		this.normalizedMonth = this.normalize(this.month);
-		this.normalizedYear = this.normalize(this.year);
-		
-		var sumOfDayAndMonth = this.getSum(this.normalizedDay + this.normalizedMonth);
-		var sumOfYear = this.getSum(this.normalizedYear);
-		
-		this.num1 = sumOfDayAndMonth + sumOfYear;
-		this.num2 = this.getSum('' + this.num1);
-		this.num3 = this.num1 - parseInt(('' + this.day).charAt(0), 10) * 2;
-		this.num4 = this.getSum('' + this.num3);
-		
-		this.array = [];
-		
-		var line1 = this.normalizedDay + this.normalizedMonth + this.normalizedYear;
-		var line2 = this.normalize(this.num1) + this.normalize(this.num2) +
-					this.normalize(this.num3) + this.normalize(this.num4);
-					
-		var str = line1 + line2;		
-		this.array.push(this.getMatches(str, 1));
-		this.array.push(this.getMatches(str, 2));
-		this.array.push(this.getMatches(str, 3));
-		this.array.push(this.getMatches(str, 4));
-		this.array.push(this.getMatches(str, 5));
-		this.array.push(this.getMatches(str, 6));
-		this.array.push(this.getMatches(str, 7));
-		this.array.push(this.getMatches(str, 8));
-		this.array.push(this.getMatches(str, 9));
-		
-		this.temper = this.getNumbersCount(2, 4, 6);
-		this.target = this.getNumbersCount(0, 3, 6);
-		this.family = this.getNumbersCount(1, 4, 7);
-		this.habbits = this.getNumbersCount(2, 5, 8);
-		this.mode_of_life = this.getNumbersCount(3, 4, 5);
-		
-		var fate = 0;
-		
-		for(fate = this.getSum('' + this.num1); fate > 9 && fate != 11; fate = this.getSum('' + fate));
-			
-		this.fate = '' + fate;
+function PercovaMatrix() {
+
+	date = new Date();
+	this.character = "Пусто";
+	this.energy = "Пусто";
+	this.interest = "Пусто";
+	this.health = "Пусто";
+	this.logic = "Пусто";
+	this.work = "Пусто";
+	this.luck = "Пусто";
+	this.debt = "Пусто";
+	this.memory = "Пусто";
+	this.fate = "Пусто";
+	this.temper = "Пусто";
+	this.target = "Пусто";
+	this.family = "Пусто";
+	this.habbits = "Пусто";
+	this.mode_of_life = "Пусто";
+
+	var numberArray = [0,0,0,0,0,0,0,0,0,0];
+
+	this.calculateMatrix = function (date) {
+				
+		this.date = date;
+		let day = date.getDate();
+		let month = date.getMonth() + 1;
+		let year = date.getFullYear();
+
+		let additionalFirst = getAdditionalFirst(day, month, year);
+		let additionalSecond = getAdditionalSecond(additionalFirst);
+		let additionalThird = getAdditionalThird(additionalFirst, day);
+		let additionalFourth = getAdditionalFourth(additionalThird);
+
+		fillArray(additionalFirst);
+		fillArray(additionalSecond);
+		fillArray(additionalThird);
+		fillArray(additionalFourth);
+
+		this.character = numberArray[1] === 0 ? 'Пусто': fillMatrix('1', numberArray[1]);
+		this.energy = numberArray[2] === 0 ? 'Пусто': fillMatrix('2', numberArray[2]);
+		this.interest = numberArray[3] === 0 ? 'Пусто': fillMatrix('3', numberArray[3]);
+		this.health = numberArray[4] === 0 ? 'Пусто': fillMatrix('4', numberArray[4]);
+		this.logic = numberArray[5] === 0 ? 'Пусто': fillMatrix('5', numberArray[5]);
+		this.work = numberArray[6] === 0 ? 'Пусто': fillMatrix('6', numberArray[6]);
+		this.luck = numberArray[7] === 0 ? 'Пусто': fillMatrix('7', numberArray[7]);
+		this.debt = numberArray[8] === 0 ? 'Пусто': fillMatrix('8', numberArray[8]);
+		this.memory = numberArray[9] === 0 ? 'Пусто': fillMatrix('9', numberArray[9]);
+		this.fate = additionalSecond;
+		this.mode_of_life = numberArray[4] + numberArray[5] + numberArray[6];				
+		this.temper = numberArray[3] + numberArray[5] + numberArray[7];
+		this.target = numberArray[1] + numberArray[4] + numberArray[7];
+		this.family = numberArray[2] + numberArray[5] + numberArray[8];
+		this.habbits = numberArray[3] + numberArray[6] + numberArray[9];		
 	}
-	
-	this.normalize = function(digit) {
-		if (digit >= 0 && digit <= 9) {
-			return '0' + digit
+
+	fillArray = function (number) {
+		let result = 0;
+
+		while (number > 0) {
+			let temp = number % 10;
+			number = (number - temp)/10;
+			numberArray[temp]++;
+			result += temp;
 		}
-		
-		return '' + digit
-	}
-	
-	this.getNumbersCount = function(i1, i2, i3) {
 
-		return '' + (this.array[i1] + this.array[i2] + this.array[i3]).length;
+		return result;
 	}
 
-	this.changeEmptyString = function(value)
-	{
-		return (this.array[value] === this.empty) ? '': this.array[value];
+	getAdditionalFirst = function (day, month, year) {
+		let result = fillArray(day);
+		result += fillArray(month);
+		result += fillArray(year);
+
+		return result;
 	}
-	
-	this.getSum = function(str) {
-		var sum = 0;
-		
-		str.split('').forEach(function(item) {
-			sum += parseInt(item, 10);
-		});
-		
-		return sum;
-	}
-	
-	this.getMatches = function(str, digit) {
-		let res = '';
-		
-		str.split('').forEach(function(item) {
-			var intItem = parseInt(item, 10);
-			if (intItem == digit) {
-				res += item;
+
+	getAdditionalSecond = function (number) {
+		let result = 0;
+
+		while (number > 0) {
+			let temp = number % 10;
+			result += number % 10;
+			number = (number - temp)/10;
+
+			if (number === 0 && result > 9 && result !== 11) {
+				number = result;
+				result = 0;
 			}
-		});
+		}
 
-		return res;
+		return result;
 	}
-	
-	this.getNormalizedDate = function() {
-		return this.normalizedDay + '/' + this.normalizedMonth + '/' + this.normalizedYear;
+
+	getAdditionalThird = function (number, day) {
+		return number - (((day - (day % 10)) / 10) * 2);
 	}
-	
-	this.getMainNumbers = function() {
-		return this.normalize(this.num1) + '.' + this.normalize(this.num2) + '.' +
-				this.normalize(this.num3) + '.' + this.normalize(this.num4);
+
+	getAdditionalFourth = function (number) {
+		let result = 0;
+
+		while (number > 0) {
+			let temp = number % 10;
+			result += number % 10;
+			number = (number - temp)/10;
+		}
+
+		return result;
 	}
-	
-	this.getString = function() {
-		var str = this.getNormalizedDate() + '; ';
-		
-		this.array.forEach(function(item, i, arr) {
-			str += item.length > 0 ? item : '-';
-			if (i < arr.length -1) {
-				str += ' / ';
-			}
-		});
-		
-		str += '; ЧС:' + this.fate;
-		str += ' Т:' + this.temper;
-		str += ' Ц:' + this.target;
-		str += ' С:' + this.family;
-		str += ' П:' + this.habbits;
-		str += ' Б:' + this.mode_of_life;
-		
-		return str;
+
+	fillMatrix = function (number, count) {
+		let result = '';
+
+		for (let i = 0; i < count; i++) {
+			result += number;
+		}
+
+		return result;
+	}
+
+	this.getResult = function(){
+		let result = '';
+		let formatter = new Intl.DateTimeFormat("ru");
+		result = formatter.format(this.date);
+		result +=';'
+		result += (this.character === 'Пусто'?'-':this.character)+ '/';
+		result += (this.energy === 'Пусто'?'-':this.energy) + '/';
+		result += (this.interest === 'Пусто'?'-':this.interest) + '/';
+		result += (this.health === 'Пусто'?'-':this.health) + '/';
+		result += (this.logic === 'Пусто'?'-':this.logic) + '/';
+		result += (this.work === 'Пусто'?'-':this.work) + '/';
+		result += (this.luck === 'Пусто'?'-':this.luck) + '/';
+		result += (this.debt === 'Пусто'?'-':this.debt) + '/';
+		result += (this.memory === 'Пусто'?'-':this.memory) + ';';
+
+		result += 'ЧС:'+(this.fate === 'Пусто'?'-':this.fate) + ' ';
+		result += 'Т:'+(this.temper === 'Пусто'?'-':this.temper) + ' ';
+		result += 'Ц:'+(this.targer === 'Пусто'?'-':this.target) + ' ';
+		result += 'С:'+(this.family === 'Пусто'?'-':this.family) + ' ';
+		result += 'П:'+(this.habbits === 'Пусто'?'-':this.habbits) + ' ';
+		result += 'Б:'+(this.mode_of_life === 'Пусто'?'-':this.mode_of_life) + ';';
+
+		return result;
 	}
 }

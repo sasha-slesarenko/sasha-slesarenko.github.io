@@ -62,81 +62,87 @@
       <p class="text_input">
         <br>Чтобы рассчитать матрицу, введите дату рождения здесь:
       </p>
-      <input class="input_date" min="1900-01-01" id="input_date" type="date" placeholder="date input"/>
-      <input id="calculate_btn" type="submit" value="Вычислить" />
+      <input class="input_date" min="1900-01-01" id="input_date" type="date" placeholder="дд.мм.гггг"/>
+      <input class="calculate_btn " type="submit" value="Вычислить" />
     </div>
     <div class="row">
       <div class="col-xs-12">
         <table class="matrix">
           <tbody>
             <tr>
-              <td class="matrix_td_special">
-                <div>Число судьбы</div>
-                <div class="fate"></div>
-              </td>
-              <td class="matrix_td_special">
-                <div>Быт</div>
-                <div class="mode_of_life"></div>
-              </td>
+              <td class="matrix_td_special"></td>
               <td class="matrix_td_special"></td>
               <td class="matrix_td_special">
+                <div>Число судьбы</div>
+                <div class="fate matrix_value"></div>
+              </td>
+              <td class="matrix_td_special">
                 <div>Темперамент</div>
-                <div class="temper"></div>
+                <div class="temper matrix_value"></div>
               </td>
             </tr>
             <tr>
               <td class="matrix_td">
                 <div>Характер</div>
-                <div class="character"></div>
+                <div class="character matrix_value"></div>
               </td>
               <td class="matrix_td">
                 <div>Здоровье</div>
-                <div class="health"></div>
+                <div class="health matrix_value"></div>
               </td>
               <td class="matrix_td">
                 <div>Удача</div>
-                <div class="luck"></div>
+                <div class="luck matrix_value"></div>
               </td>
               <td class="matrix_td_special">
                 <div>Цель</div>
-                <div class="target"></div>
+                <div class="target matrix_value"></div>
               </td>
             </tr>
             <tr>
               <td class="matrix_td">
                 <div>Энергия</div>
-                <div class="energy"></div>
+                <div class="energy matrix_value"></div>
               </td>
               <td class="matrix_td">
                 <div>Логика</div>
-                <div class="logic"></div>
+                <div class="logic matrix_value"></div>
               </td>
               <td class="matrix_td">
                 <div>Долг</div>
-                <div class="debt"></div>
+                <div class="debt matrix_value"></div>
               </td>
               <td class="matrix_td_special">
                 <div>Семья</div>
-                <div class="family"></div>
+                <div class="family matrix_value"></div>
               </td>
             </tr>
             <tr>
               <td class="matrix_td">
                 <div >Интерес</div>
-                <div class="interest"></div>
+                <div class="interest matrix_value"></div>
               </td>
               <td class="matrix_td">
                 <div>Труд</div>
-                <div class="work"></div>
+                <div class="work matrix_value"></div>
               </td>
               <td class="matrix_td">
                 <div>Память</div>
-                <div class="memory"></div>
+                <div class="memory matrix_value"></div>
               </td>
               <td class="matrix_td_special">
                 <div >Привычки</div>
-                <div class="habbits"></div>
+                <div class="habbits matrix_value"></div>
               </td>
+            </tr>
+            <tr>
+              <td class="matrix_td_special"></td>
+              <td class="matrix_td_special">
+                <div>Быт</div>
+                <div class="mode_of_life matrix_value"></div>
+              </td>
+              <td class="matrix_td_special"></td>
+              <td class="matrix_td_special"></td>
             </tr>
           </tbody>
         </table>
