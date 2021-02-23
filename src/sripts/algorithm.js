@@ -14,6 +14,10 @@ $(function () {
 	});
 });
 
+function isValidDate(d) {
+	return d instanceof Date && !isNaN(d);
+}
+
 function calculate(date) {
 	
 	var matrix = new PercovaMatrix();
@@ -38,10 +42,6 @@ function calculate(date) {
 	$(".mode_of_life").text(matrix.mode_of_life);
 
 	$(".matrix_result").text(matrix.getResult());
-}
-
-function isValidDate(d) {
-	return d instanceof Date && !isNaN(d);
 }
 
 function copyToClipboard(str) {
