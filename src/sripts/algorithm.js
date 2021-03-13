@@ -102,13 +102,40 @@ function PercovaMatrix() {
 		this.luck = numberArray[7] === 0 ? 'Пусто': fillMatrix('7', numberArray[7]);
 		this.debt = numberArray[8] === 0 ? 'Пусто': fillMatrix('8', numberArray[8]);
 		this.memory = numberArray[9] === 0 ? 'Пусто': fillMatrix('9', numberArray[9]);
-		this.fate = additionalSecond;
-		this.mode_of_life = numberArray[4] + numberArray[5] + numberArray[6];				
-		this.temper = numberArray[3] + numberArray[5] + numberArray[7];
-		this.target = numberArray[1] + numberArray[4] + numberArray[7];
-		this.family = numberArray[2] + numberArray[5] + numberArray[8];
-		this.habbits = numberArray[3] + numberArray[6] + numberArray[9];		
+		this.fate = additionalSecond === 0 ? 'Пусто' : additionalSecond;		
+		let temp = getModOfLife();
+		this.mode_of_life = temp === 0 ? 'Пусто' : temp;
+		temp = getTemper();
+		this.temper = temp === 0 ? 'Пусто' : temp;
+		temp = getTarget();
+		this.target = temp === 0 ? 'Пусто' : temp;
+		temp = getFamily();
+		this.family = temp === 0 ? 'Пусто' : temp;
+		temp = getHabbits();
+		this.habbits = temp === 0 ? 'Пусто' : temp;
 	}
+
+	getModOfLife = function(){
+		return numberArray[4] + numberArray[5] + numberArray[6];
+	}
+
+	getTemper = function(){
+		return numberArray[3] + numberArray[5] + numberArray[7];
+	}
+
+	getTarget = function(){
+		return numberArray[1] + numberArray[4] + numberArray[7];
+	}
+
+	getFamily = function(){
+		return numberArray[2] + numberArray[5] + numberArray[8];
+	}
+
+	getHabbits = function(){
+		return numberArray[3] + numberArray[6] + numberArray[9];
+	}
+
+
 
 	fillArray = function (number) {
 		let result = 0;
