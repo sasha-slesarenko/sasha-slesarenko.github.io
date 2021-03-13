@@ -114,10 +114,10 @@ function PercovaMatrix() {
 		let result = 0;
 
 		while (number > 0) {
-			let temp = number % 10;
-			number = (number - temp)/10;
-			numberArray[temp]++;
+			let temp = number % 10;			
 			result += temp;
+			number = (number - temp)/10;
+			numberArray[temp]++;			
 		}
 
 		return result;
@@ -136,7 +136,7 @@ function PercovaMatrix() {
 
 		while (number > 0) {
 			let temp = number % 10;
-			result += number % 10;
+			result += temp;
 			number = (number - temp)/10;
 
 			if (number === 0 && result > 9 && result !== 11) {
@@ -149,7 +149,14 @@ function PercovaMatrix() {
 	}
 
 	getAdditionalThird = function (number, day) {
-		return number - (((day - (day % 10)) / 10) * 2);
+		let firstNumber = 0;
+
+		while(day > 0){
+			firstNumber = day % 10;
+			day = (day - firstNumber)/10;
+		}			
+
+		return number - (firstNumber * 2);
 	}
 
 	getAdditionalFourth = function (number) {
