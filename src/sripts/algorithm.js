@@ -102,8 +102,9 @@ function PercovaMatrix() {
 		this.luck = numberArray[7] === 0 ? 'Пусто': fillMatrix('7', numberArray[7]);
 		this.debt = numberArray[8] === 0 ? 'Пусто': fillMatrix('8', numberArray[8]);
 		this.memory = numberArray[9] === 0 ? 'Пусто': fillMatrix('9', numberArray[9]);
-		this.fate = additionalSecond === 0 ? 'Пусто' : additionalSecond;		
-		let temp = getModOfLife();
+		let temp = getFate(additionalFirst);
+		this.fate = temp === 0 ? 'Пусто' : temp;		
+		temp = getModOfLife();
 		this.mode_of_life = temp === 0 ? 'Пусто' : temp;
 		temp = getTemper();
 		this.temper = temp === 0 ? 'Пусто' : temp;
@@ -135,6 +136,23 @@ function PercovaMatrix() {
 		return numberArray[3] + numberArray[6] + numberArray[9];
 	}
 
+	getFate = function (number) {
+		let result = 0;
+
+		while (number > 0) {
+			let temp = number % 10;
+			result += temp;
+			number = (number - temp)/10;
+
+			if (number === 0 && result > 9 && result !== 11) {
+				number = result;
+				result = 0;
+			}
+		}
+
+		return result;
+	}
+
 
 
 	fillArray = function (number) {
@@ -163,13 +181,8 @@ function PercovaMatrix() {
 
 		while (number > 0) {
 			let temp = number % 10;
-			result += temp;
+			result += number % 10;
 			number = (number - temp)/10;
-
-			if (number === 0 && result > 9 && result !== 11) {
-				number = result;
-				result = 0;
-			}
 		}
 
 		return result;
