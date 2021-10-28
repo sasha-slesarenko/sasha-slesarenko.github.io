@@ -82,11 +82,11 @@ function PercovaMatrix() {
 		let day = date.getDate();
 		let month = date.getMonth() + 1;
 		let year = date.getFullYear();
-
-		let additionalFirst = getAdditionalFirst(day, month, year);
-		let additionalSecond = getAdditionalSecond(additionalFirst);
-		let additionalThird = getAdditionalThird(additionalFirst, day);
-		let additionalFourth = getAdditionalFourth(additionalThird);
+		//data 01.01.1990
+		let additionalFirst = getAdditionalFirst(day, month, year);//sum numbers of date numbers (0+1+0+1+1+9+9+0 = 21)
+		let additionalSecond = getAdditionalSecond(additionalFirst);//sum numbers of A1 (2+1=3)
+		let additionalThird = getAdditionalThird(additionalFirst, day); //A1 - (firstDateNumber * 2) (21-(1*2) = 19)
+		let additionalFourth = getAdditionalFourth(additionalThird);//sum numbers of A3 (1+9=10)
 
 		fillArray(additionalFirst);
 		fillArray(additionalSecond);
@@ -102,7 +102,7 @@ function PercovaMatrix() {
 		this.luck = numberArray[7] === 0 ? 'Пусто': fillMatrix('7', numberArray[7]);
 		this.debt = numberArray[8] === 0 ? 'Пусто': fillMatrix('8', numberArray[8]);
 		this.memory = numberArray[9] === 0 ? 'Пусто': fillMatrix('9', numberArray[9]);
-		let temp = getFate(additionalFirst);
+		let temp = getFate(additionalFirst);//sum numbers of A1, but if result 11 show it, if great then 9 find sum numbers (2+1=3) ONLY one NUMBER as result OR 11
 		this.fate = temp === 0 ? 'Пусто' : temp;		
 		temp = getModOfLife();
 		this.mode_of_life = temp === 0 ? 'Пусто' : temp;
