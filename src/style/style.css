@@ -18,7 +18,8 @@
     justify-content: center;  
     align-items: center; 
     flex-direction: row-reverse;   
-    background-image: url(../img/header_background.jpeg); 
+    background-color: #4f2a55;
+    /* background-image: url(../img/header_background.jpeg);  */
   }
 
   .insta_link{
@@ -88,10 +89,17 @@
   .greet_text{
     padding: 10px;
   }
+
   .text{
     text-align: center;    
     margin-bottom: 0;
+    font-size: large;
     font-style: italic;
+    color: whitesmoke;
+  }
+
+  .text_logo{
+    color:whitesmoke;
   }
 
   .text_input{
